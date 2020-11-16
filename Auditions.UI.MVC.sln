@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.1209
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auditions.UI.MVC", "Auditions.UI.MVC\Auditions.UI.MVC.csproj", "{BAE4449D-828B-4A45-8827-B9359432E71D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auditions.DATA.EF", "Auditions.DATA.EF\Auditions.DATA.EF.csproj", "{B1F1F575-3860-4462-8CA1-4FAE0B4B3396}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BAE4449D-828B-4A45-8827-B9359432E71D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAE4449D-828B-4A45-8827-B9359432E71D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAE4449D-828B-4A45-8827-B9359432E71D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1F1F575-3860-4462-8CA1-4FAE0B4B3396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F1F575-3860-4462-8CA1-4FAE0B4B3396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F1F575-3860-4462-8CA1-4FAE0B4B3396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1F1F575-3860-4462-8CA1-4FAE0B4B3396}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
