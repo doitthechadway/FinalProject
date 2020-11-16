@@ -1,7 +1,5 @@
-﻿using Microsoft.Owin;
-using Owin;
+﻿using Owin;
 
-[assembly: OwinStartupAttribute(typeof(Auditions.UI.MVC.Startup))]
 namespace Auditions.UI.MVC
 {
     public partial class Startup
