@@ -1,4 +1,5 @@
-﻿using Auditions.UI.MVC.Models;
+﻿using Auditions.DATA.EF;
+using Auditions.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -16,7 +17,7 @@ namespace Auditions.UI.MVC.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -153,6 +154,24 @@ namespace Auditions.UI.MVC.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    // Added Custom User Details
+                    #region Custom User Details
+
+                    UserDetail newUserDetails = new UserDetail();
+                    newUserDetails.UserID = user.Id;
+                    newUserDetails.FirstName = model.FirstName;
+                    newUserDetails.LastName = model.LastName;
+                    newUserDetails.AgencyName = model.AgencyName;
+                    newUserDetails.UserPhoto = model.UserPhoto;
+                    newUserDetails.UserDetails = model.UserDetails;
+                    newUserDetails.DateFounded = model.DateFounded;
+
+                    AuditionsEntities db = new AuditionsEntities();
+                    db.UserDetails.Add(newUserDetails);
+                    db.SaveChanges();
+
+                    #endregion
+
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");

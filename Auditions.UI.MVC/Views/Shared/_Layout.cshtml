@@ -23,10 +23,11 @@
     <link rel="stylesheet" href="~/Content/css/light-box.css">
     <link rel="stylesheet" href="~/Content/css/owl-carousel.css">
     <link rel="stylesheet" href="~/Content/css/templatemo-style.css">
-
+    <link href="~/Content/css/custom.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
 
     <script src="~/Content/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+
 
     @RenderSection("styles", false)
 
@@ -35,7 +36,7 @@
 <body>
 
 
-
+    <!--navbar-->
     <header class="nav-down responsive-nav hidden-lg hidden-md">
         <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
             <span class="sr-only">Toggle navigation</span>
@@ -117,8 +118,16 @@
         </ul>
     </div>
 
-    @RenderBody()
+    <!--Page Content-->
 
+    @RenderSection("slider", false)
+
+    <div class="page-content">
+        @RenderBody()
+        </div>
+
+
+    <!--Footer-->
     <section class="footer">
         <p>
             Copyright &copy; 2019 Company Name

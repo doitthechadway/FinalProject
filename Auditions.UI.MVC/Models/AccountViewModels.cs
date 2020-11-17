@@ -79,6 +79,36 @@ namespace Auditions.UI.MVC.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        [StringLength(50, ErrorMessage = "*50 character limit")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        [StringLength(50, ErrorMessage = "*50 character limit")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Agency Name")]
+        [DisplayFormat(NullDisplayText = "*Not Available")]
+        [StringLength(50, ErrorMessage = "*50 character limit")]
+        public string AgencyName { get; set; }
+
+        [Display(Name = "Agency Photo/Logo")]
+        [DisplayFormat(NullDisplayText = "*Not Available")]
+        public string UserPhoto { get; set; }
+
+        [Display(Name = "Agency Description")]
+        [DisplayFormat(NullDisplayText = "*Not Available")]
+        public string UserDetails { get; set; }
+
+        [Display(Name = "Date Founded")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true, NullDisplayText = "*Not Available")]
+
+        public System.DateTime DateFounded { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel
