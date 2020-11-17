@@ -11,7 +11,8 @@ namespace Auditions.DATA.EF
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class AspNetUser
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,6 +24,8 @@ namespace Auditions.DATA.EF
         }
     
         public string Id { get; set; }
+        
+        [RegularExpression("email", ErrorMessage = "*Please input a valid email: example@email.com")]
         public string Email { get; set; }
         public bool EmailConfirmed { get; set; }
         public string PasswordHash { get; set; }
