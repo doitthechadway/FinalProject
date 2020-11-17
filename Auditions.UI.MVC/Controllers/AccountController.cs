@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Auditions.UI.MVC.Controllers
 {
@@ -163,7 +164,7 @@ namespace Auditions.UI.MVC.Controllers
                     newUserDetails.LastName = model.LastName;
                     newUserDetails.AgencyName = model.AgencyName;
                     newUserDetails.UserPhoto = model.UserPhoto;
-                    newUserDetails.UserDetails = model.UserDetails;
+                    newUserDetails.UserNotes = model.UserNotes;
                     newUserDetails.DateFounded = model.DateFounded;
 
                     AuditionsEntities db = new AuditionsEntities();

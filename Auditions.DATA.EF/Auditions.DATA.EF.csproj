@@ -76,6 +76,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Auditions.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Auditions.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Auditions.tt</DependentUpon>
+    </Compile>
     <Compile Include="Auditions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

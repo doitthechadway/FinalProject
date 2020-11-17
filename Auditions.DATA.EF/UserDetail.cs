@@ -24,9 +24,9 @@ namespace Auditions.DATA.EF
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserPhoto { get; set; }
-        public string UserDetails { get; set; }
         public Nullable<System.DateTime> DateFounded { get; set; }
         public string AgencyName { get; set; }
+        public string UserNotes { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Actor> Actors { get; set; }

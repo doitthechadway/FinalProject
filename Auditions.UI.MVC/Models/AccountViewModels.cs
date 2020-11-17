@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Auditions.UI.MVC.Models
@@ -101,12 +102,11 @@ namespace Auditions.UI.MVC.Models
 
         [Display(Name = "Agency Description")]
         [DisplayFormat(NullDisplayText = "*Not Available")]
-        public string UserDetails { get; set; }
+        public string UserNotes { get; set; }
 
         [Display(Name = "Date Founded")]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true, NullDisplayText = "*Not Available")]
-
-        public System.DateTime DateFounded { get; set; }
+        public Nullable<System.DateTime> DateFounded { get; set; }
 
 
     }

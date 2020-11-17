@@ -115,7 +115,7 @@
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AgencyName" Type="varchar" MaxLength="50" />
           <Property Name="UserPhoto" Type="varchar" MaxLength="50" />
-          <Property Name="UserDetails" Type="varchar" MaxLength="300" />
+          <Property Name="UserNotes" Type="varchar" MaxLength="300" />
           <Property Name="DateFounded" Type="date" />
         </EntityType>
         <Association Name="FK_Actors_ActorContactInfo">
@@ -384,10 +384,10 @@
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserPhoto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UserDetails" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="DateFounded" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Actors" Relationship="Self.FK_Actors_UserDetails" FromRole="UserDetails" ToRole="Actors" />
           <Property Name="AgencyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserNotes" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Actors_ActorContactInfo">
           <End Role="ActorContactInfo" Type="Self.ActorContactInfo" Multiplicity="1" />
@@ -616,12 +616,12 @@
           <EntitySetMapping Name="UserDetails">
             <EntityTypeMapping TypeName="AuditionsModel.UserDetail">
               <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="UserNotes" ColumnName="UserNotes" />
                 <ScalarProperty Name="AgencyName" ColumnName="AgencyName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="UserPhoto" ColumnName="UserPhoto" />
-                <ScalarProperty Name="UserDetails" ColumnName="UserDetails" />
                 <ScalarProperty Name="DateFounded" ColumnName="DateFounded" />
               </MappingFragment>
             </EntityTypeMapping>

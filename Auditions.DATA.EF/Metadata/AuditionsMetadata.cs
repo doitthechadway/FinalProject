@@ -46,7 +46,7 @@ namespace Auditions.DATA.EF.Metadata
             [UIHint("MultilineText")]
             public string SpecialNotes { get; set; }
 
-            [DisplayFormat(NullDisplayText = "*Not Available", DataFormatString = "{0:d}", ApplyFormatInEditMode = true))]
+            [DisplayFormat(NullDisplayText = "*Not Available", DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
             [Display(Name = "Date Hired by Agency")]
             public Nullable<System.DateTime> DateAdded { get; set; }
 
@@ -191,7 +191,7 @@ namespace Auditions.DATA.EF.Metadata
             [StringLength(50, ErrorMessage = "*50 character limit")]
             public string FirstName { get; set; }
 
-            [Required(ErrorMessage = "*Agen'ts Last Name Required")]
+            [Required(ErrorMessage = "*Agent's Last Name Required")]
             [Display(Name = "Agent's Last Name")]
             [StringLength(50, ErrorMessage = "*50 character limit")]
             public string LastName { get; set; }
@@ -205,7 +205,7 @@ namespace Auditions.DATA.EF.Metadata
             [StringLength(300, ErrorMessage = "*300 character limit")]
             [DisplayFormat(NullDisplayText = "*Not Available")]
             [UIHint("MultilineText")]
-            public string UserDetails { get; set; }
+            public string UserNotes { get; set; }
 
             [Display(Name = "Agency Date Founded")]
             [DisplayFormat(NullDisplayText = "*Not Available", DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
