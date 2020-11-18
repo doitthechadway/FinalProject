@@ -25,7 +25,6 @@ namespace Auditions.DATA.EF
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ActorContactInfo> ActorContactInfoes { get; set; }
         public virtual DbSet<Actor> Actors { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }

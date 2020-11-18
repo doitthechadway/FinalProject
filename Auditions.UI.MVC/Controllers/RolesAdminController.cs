@@ -56,6 +56,7 @@ namespace Auditions.UI.MVC.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            ViewBag.Title = "User Roles Administration";
             return View(RoleManager.Roles);
         }
 

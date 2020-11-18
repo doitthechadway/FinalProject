@@ -1,0 +1,42 @@
+﻿@model Auditions.DATA.EF.Reservation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Reservation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AuditionDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AuditionDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Actor.ActorFirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Actor.ActorFirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AuditionLocation.LocationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AuditionLocation.LocationName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AuditionID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

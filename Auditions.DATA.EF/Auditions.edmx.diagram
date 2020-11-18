@@ -4,17 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="75685258e74c4e41a4d72d6ad00e1ef6" Name="Diagram1">
-        <EntityTypeShape EntityType="AuditionsModel.ActorContactInfo" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+      <Diagram DiagramId="512bed95f3484fd88b5bc55fe88ec7c6" Name="Diagram1">
         <EntityTypeShape EntityType="AuditionsModel.Actor" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="AuditionsModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AuditionsModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="AuditionsModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AuditionsModel.AspNetUser" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AuditionsModel.AuditionLocation" Width="1.5" PointX="3" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="AuditionsModel.Reservation" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AuditionsModel.UserDetail" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
-        <AssociationConnector Association="AuditionsModel.FK_Actors_ActorContactInfo" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AuditionsModel.AuditionLocation" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuditionsModel.Reservation" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuditionsModel.UserDetail" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
         <AssociationConnector Association="AuditionsModel.FK_Actors_UserDetails" ManuallyRouted="false" />
         <AssociationConnector Association="AuditionsModel.FK_Reservation_Actors" ManuallyRouted="false" />
         <AssociationConnector Association="AuditionsModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />

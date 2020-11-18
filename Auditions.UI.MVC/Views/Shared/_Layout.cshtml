@@ -54,6 +54,17 @@
                     <li><a href="#video">Presentation</a></li>
                     <li><a href="#blog">Blog Entries</a></li>
                     <li><a href="#contact">Contact Us</a></li>
+                    @*<li><a href="@Url.Action("Login", "Account")">Login</a></li>
+
+                    @if ((User.IsInRole("Admin") && Request.IsAuthenticated))
+                    {
+                        <li>@Html.ActionLink("Actors", "Index", "Actors")</li>
+                        <li>@Html.ActionLink("Audition Locations", "Index", "AuditionLocations")</li>
+                        <li>@Html.ActionLink("Reservations", "Index", "Reservations")</li>
+                        <li>@Html.ActionLink("Agents/Agencies Information", "Index", "UserDetails")</li>
+                        <li>@Html.ActionLink("User Account Management", "Index", "UsersAdmin")</li>
+                        <li>@Html.ActionLink("User Account Types/Roles", "Index", "RolesAdmin")</li>
+                    }*@
                 </ul>
             </nav>
         </div>
@@ -124,7 +135,7 @@
 
     <div class="page-content">
         @RenderBody()
-        </div>
+    </div>
 
 
     <!--Footer-->
@@ -132,7 +143,7 @@
         <p>
             Copyright &copy; 2019 Company Name
 
-            . Design: TemplateMo
+            Design: TemplateMo
         </p>
     </section>
 

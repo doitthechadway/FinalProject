@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "User Roles Administration";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -34,3 +34,10 @@
     }
 
 </table>
+
+@if ((User.IsInRole("Admin") && Request.IsAuthenticated))
+{
+    <div class="col-md-6">
+        @Html.ActionLink("Back to Admin Menu", "AdminMenu", "Admin")
+    </div>
+}

@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<Auditions.UI.MVC.Models.ApplicationUser>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Actors";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
-<p>
+<div class="col-md-6">
     @Html.ActionLink("Create New", "Create")
-</p>
+</div>
+
 <table class="table">
     <tr>
         <th>
@@ -34,3 +35,10 @@
     }
 
 </table>
+
+@if ((User.IsInRole("Admin") && Request.IsAuthenticated))
+{
+    <div class="col-md-6">
+        @Html.ActionLink("Back to Admin Menu", "AdminMenu", "Admin")
+    </div>
+}
