@@ -9,7 +9,8 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table" id="table_id">
+    <thead>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -18,6 +19,8 @@
 
         </th>
     </tr>
+        </thead>
+    <tbody>
 
     @foreach (var item in Model)
     {
@@ -32,7 +35,7 @@
             </td>
         </tr>
     }
-
+        </tbody>
 </table>
 
 @if ((User.IsInRole("Admin") && Request.IsAuthenticated))

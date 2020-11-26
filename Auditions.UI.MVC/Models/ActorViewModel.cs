@@ -40,7 +40,6 @@ namespace Auditions.UI.MVC.Models
         [Display(Name = "Phone Number")]
         [StringLength(13, ErrorMessage = "*13 character limit")]
         [DisplayFormat(NullDisplayText = "*Not Available")]
-        [RegularExpression("phone", ErrorMessage = "*Please input a valid phone number: 123-456-6789")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "*Agency Name is Required")]

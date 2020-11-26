@@ -71,7 +71,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ActorPhoto)
+            @*@Html.DisplayFor(model => model.ActorPhoto)*@
+            <img src="~/Content/actorheadshots/@Model.ActorPhoto" alt="@Model.ActorFirstName" />
         </dd>
 
         <dt>

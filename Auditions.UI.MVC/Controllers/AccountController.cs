@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System;
+using System.Drawing;
+using Auditions.UI.MVC.Utilities;
 
 namespace Auditions.UI.MVC.Controllers
 {
@@ -147,14 +150,39 @@ namespace Auditions.UI.MVC.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase agencyphoto)
         {
             if (ModelState.IsValid)
             {
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    string imgName = "nouserimg.png";
+                    
+                    if (agencyphoto != null)
+                    {
+                        imgName = agencyphoto.FileName;
+                        string ext = imgName.Substring(imgName.LastIndexOf('.'));
+                        string[] goodExts = { ".jpeg", ".jpg", ".gif", ".png" };
+                        if (goodExts.Contains(ext.ToLower()) && (agencyphoto.ContentLength <= 4193404))
+
+                        {
+                            imgName = Guid.NewGuid() + ext.ToLower();
+                            string savePath = Server.MapPath("~/Content/agencylogo/");
+                            Image convertedImage = Image.FromStream(agencyphoto.InputStream);
+                            int maxImageSize = 500;
+                            int maxThumbSize = 100;
+                            UploadUtility.ResizeImage(savePath, imgName, convertedImage, maxImageSize, maxThumbSize);
+                            
+                        }
+                        else
+                        {
+                            imgName = "nouserimg.png";
+                        }
+                    }
+                    
                     // Added Custom User Details
                     #region Custom User Details
 
@@ -166,10 +194,12 @@ namespace Auditions.UI.MVC.Controllers
                     newUserDetails.UserPhoto = model.UserPhoto;
                     newUserDetails.UserNotes = model.UserNotes;
                     newUserDetails.DateFounded = model.DateFounded;
+                    newUserDetails.UserPhoto = imgName;
 
                     AuditionsEntities db = new AuditionsEntities();
                     db.UserDetails.Add(newUserDetails);
                     db.SaveChanges();
+                    UserManager.AddToRole(user.Id, "Agency");
 
                     #endregion
 

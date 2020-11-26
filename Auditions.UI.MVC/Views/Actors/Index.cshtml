@@ -1,102 +1,108 @@
 ﻿@model IEnumerable<Auditions.DATA.EF.Actor>
 
 @{
+
     ViewBag.Title = "Actors";
+    
 }
 
 <h2>@ViewBag.Title</h2>
 
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ActorFirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ActorLastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ZipCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ActorPhoto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SpecialNotes)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateAdded)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserDetail.FirstName)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table" id="table_id">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActorFirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActorLastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.State)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ZipCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActorPhoto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecialNotes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateAdded)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserDetail.FirstName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ActorId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ActorId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ActorId })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.ActorFirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActorLastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZipCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActorPhoto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpecialNotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateAdded)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserDetail.FirstName)
+            </th>
+            <th></th>
         </tr>
-    }
-
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActorFirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActorLastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ZipCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.ActorPhoto)*@
+                    <img src="~/Content/actorheadshots/@Html.DisplayFor(modelItem => item.ActorPhoto)" alt="@item.ActorPhoto" class="imgcontainer250" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpecialNotes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateAdded)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserDetail.FirstName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ActorId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ActorId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ActorId })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 @if ((User.IsInRole("Admin") && Request.IsAuthenticated))
@@ -105,3 +111,6 @@
         @Html.ActionLink("Back to Admin Menu", "AdminMenu", "Admin")
     </div>
 }
+
+
+

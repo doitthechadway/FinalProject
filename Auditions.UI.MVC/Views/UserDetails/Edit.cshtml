@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>UserDetail</h4>
         <hr />
@@ -44,10 +44,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.UserPhoto, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UserPhoto, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserPhoto, "", new { @class = "text-danger" })
+                @*@Html.EditorFor(model => model.UserPhoto, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserPhoto, "", new { @class = "text-danger" })*@
+                <div>
+                    <img width="150" src="@Url.Content("~/Content/agencylogo/"+Model.UserPhoto)" />
+                </div>
+                <input type="file" style="display:inline" name="agencyphoto" />
             </div>
         </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.UserNotes, htmlAttributes: new { @class = "control-label col-md-2" })

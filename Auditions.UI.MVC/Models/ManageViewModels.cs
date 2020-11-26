@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Auditions.DATA.EF;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,7 @@ namespace Auditions.UI.MVC.Models
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
     }
+   
 
     public class ManageLoginsViewModel
     {

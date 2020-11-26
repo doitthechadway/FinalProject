@@ -1,4 +1,5 @@
-jQuery(document).ready(function($) {
+
+jQuery(document).ready(function ($) {
 
     'use strict';
 
@@ -75,7 +76,7 @@ jQuery(document).ready(function($) {
         
         //when a nav link is clicked, smooth scroll to the section
         navigation.on('click', 'a', function(event){
-            event.preventDefault(); //prevents previous event
+            //event.preventDefault(); //prevents previous event
             smoothScroll($(this.hash));
         });
         

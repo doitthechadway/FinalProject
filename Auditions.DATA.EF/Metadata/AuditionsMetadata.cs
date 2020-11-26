@@ -8,7 +8,15 @@ using System.Threading.Tasks;
 namespace Auditions.DATA.EF
 {
     [MetadataType(typeof(ActorMetaData))]
-    public partial class Actor { }
+    public partial class Actor
+    {
+        [Display(Name = "Actor's Full Name")]
+        public string ActorFullName
+        {
+            get { return ($"{ActorFirstName} {ActorLastName}"); }
+        }
+
+    }
 
     public class ActorMetaData
     {
@@ -45,7 +53,7 @@ namespace Auditions.DATA.EF
         [Display(Name = "Phone Number")]
         [StringLength(13, ErrorMessage = "*13 character limit")]
         [DisplayFormat(NullDisplayText = "*Not Available")]
-        [RegularExpression("phone", ErrorMessage = "*Please input a valid phone number: 123-456-6789")]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "*Agency Name is Required")]
@@ -85,7 +93,6 @@ namespace Auditions.DATA.EF
         [Required(ErrorMessage = "*Location Name Required")]
         [StringLength(50, ErrorMessage = "*50 character limit")]
         public string LocationName { get; set; }
-
 
         [Required(ErrorMessage = "*Address Required")]
         [StringLength(100, ErrorMessage = "*100 character limit")]
@@ -159,7 +166,15 @@ namespace Auditions.DATA.EF
     }
 
     [MetadataType(typeof(UserDetailMetaData))]
-    public partial class UserDetail { }
+    public partial class UserDetail
+    {
+        [Display(Name = "User's Full Name")]
+        public string AgentsFullName
+        {
+            get { return ($"{FirstName} {LastName}"); }
+        }
+
+    }
 
     public class UserDetailMetaData
     {

@@ -9,7 +9,6 @@ using System.Web.Mvc;
 
 namespace Auditions.UI.MVC.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class UsersAdminController : Controller
     {
         public UsersAdminController()

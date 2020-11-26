@@ -1,0 +1,22 @@
+﻿@model Auditions.UI.MVC.Models.ContactViewModel
+@{
+    ViewBag.Title = "Email Confirmation";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>Thank you @Model.Name!</h3>
+<p>
+    We have received your email, and will respond soon. Details of your message are below.
+</p>
+
+<p class="text-success">
+    <h4>Name: @Model.Name</h4>
+    <br />
+    <h4>Email: @Model.Email</h4>
+    <br />
+    <h4>Subject: @Model.Subject</h4>
+    <br />
+    <h4>Message: @Model.Message</h4>
+    <br />
+</p>

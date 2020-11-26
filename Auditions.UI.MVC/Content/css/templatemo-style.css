@@ -225,7 +225,7 @@ header {
 }
 
 .sidebar-navigation ul {
-  margin-left: 45px;
+  margin-left: 20px;
   list-style: none;
   padding: 0;
 }
@@ -256,6 +256,8 @@ header {
   border: 2px solid #fff;
   transition: all 0.3s;
 }
+
+
 .rect{
   height: 1px;
   width: 0px;

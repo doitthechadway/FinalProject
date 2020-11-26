@@ -4,50 +4,53 @@
     ViewBag.Title = "Reservations";
 }
 
-<h2>ViewBag.Title</h2>
+<h2>Reservations</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.AuditionLocation.AuditionDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Actor.ActorFirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Actor.ActorLastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AuditionLocation.LocationName)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table" id="table_id">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AuditionLocation.AuditionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Actor.ActorFirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Actor.ActorLastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AuditionLocation.LocationName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.AuditionID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.AuditionID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.AuditionID })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.AuditionLocation.AuditionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Actor.ActorFirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Actor.ActorLastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuditionLocation.LocationName)
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuditionLocation.AuditionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Actor.ActorFirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Actor.ActorLastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuditionLocation.LocationName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.AuditionID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.AuditionID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.AuditionID })
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
 

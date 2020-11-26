@@ -11,7 +11,6 @@ using System.Collections.Generic;
 
 namespace Auditions.UI.MVC.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class RolesAdminController : Controller
     {
         public RolesAdminController()

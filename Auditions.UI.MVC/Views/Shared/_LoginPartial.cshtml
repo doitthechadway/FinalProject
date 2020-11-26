@@ -1,19 +1,24 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated) {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm",})) {
         @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-        </ul>
+<ul>
+    <li><span class="circle2"></span>
+    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+</li>
+
+    <li><span class="circle2"></span>@Html.ActionLink("Actors", "Index", "Actors")</li>
+    <li><span class="circle2"></span>@Html.ActionLink("Audition Locations", "Index", "AuditionLocations")</li>
+    <li><span class="circle2"></span>@Html.ActionLink("Reservations", "Index", "Reservations")</li>
+    <li><span class="circle2"></span>@Html.ActionLink("Agents/Agencies Information", "Index", "UserDetails")</li>
+    <li><span class="circle2"></span>@Html.ActionLink("User Account Management", "Index", "UsersAdmin")</li>
+    <li><span class="circle2"></span>@Html.ActionLink("User Account Types/Roles", "Index", "RolesAdmin")</li>
+    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+</ul>
     }
 }
 else {
-    <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
 }
