@@ -87,12 +87,25 @@ namespace Auditions.DATA.EF
     }
 
     [MetadataType(typeof(AuditionLocationMetaData))]
-    public partial class AuditionLocation { }
+    public partial class AuditionLocation
+    {
+        [Display(Name = "Audition Location")]
+        public string FullAuditionLocation
+        {
+            get { return $"{LocationName} | {Address},  {City}, {State} ({ZipCode}) | # of Auditions: ({AuditionLimit})"; }
+        }
+
+        [Display(Name = "Audition Location")]
+        public string AuditionAddress
+        {
+            get { return $"{Address},  {City}, {State} ({ZipCode})"; }
+        }
+
+    }
 
     public class AuditionLocationMetaData
     {
         [Display(Name = "Location ID")]
-        [Required(ErrorMessage = "*Location ID Required")]
         public int LocationID { get; set; }
 
         [Display(Name = "Location Name")]
@@ -135,91 +148,93 @@ namespace Auditions.DATA.EF
 
         [Display(Name = "Audition Date")]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true, NullDisplayText = "*Not Available")]
-        public Nullable<System.DateTime> AuditionDate { get; set; }
+        public System.DateTime AuditionDate { get; set; }
 
         [Display(Name = "Audition Status (Active/Inactive)")]
         [Required(ErrorMessage = "*Show Active/Inactive Audition Required")]
         public bool IsActive { get; set; }
 
         [Display(Name = "Location Manager ID")]
-        [Required(ErrorMessage = "*This field is required")]
         public string LManagerID { get; set; }
     }
 
     [MetadataType(typeof(ReservationMetaData))]
     public partial class Reservation
-    { }
-
-    public class ReservationMetaData
     {
-        [Required(ErrorMessage = "*Auditon ID Required")]
-        [Display(Name = "Audition ID")]
-        [Range(0, double.MaxValue, ErrorMessage = "Invalid Value")]
-        public int AuditionID { get; set; }
-
-        [Required(ErrorMessage = "*Actor ID Required")]
-        [Display(Name = "Actor ID")]
-        [Range(0, double.MaxValue, ErrorMessage = "Invalid Value")]
-        public int ActorId { get; set; }
-
-
-        [Required(ErrorMessage = "*Location ID Required")]
-        [Display(Name = "Location ID")]
-        [Range(0, double.MaxValue, ErrorMessage = "Invalid Value")]
-        public int LocationId { get; set; }
-
-        [Required(ErrorMessage = "*Reservation Date Required")]
-        [Display(Name = "Reservation Date")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
-        public System.DateTime AuditionDate { get; set; }
+        public int OpenSpots
+        { get; set; }
     }
 
-    [MetadataType(typeof(UserDetailMetaData))]
-    public partial class UserDetail
-    {
-        [Display(Name = "Agent/Agency")]
-        public string AgentsFullName
-        {
-            get { return ($"{FirstName} {LastName}"); }
-        }
 
+public class ReservationMetaData
+{
+    [Required(ErrorMessage = "*Auditon ID Required")]
+    [Display(Name = "Audition ID")]
+    [Range(0, double.MaxValue, ErrorMessage = "Invalid Value")]
+    public int AuditionID { get; set; }
+
+    [Required(ErrorMessage = "*Actor ID Required")]
+    [Display(Name = "Actor ID")]
+    [Range(0, double.MaxValue, ErrorMessage = "Invalid Value")]
+    public int ActorId { get; set; }
+
+    [Required(ErrorMessage = "*Location ID Required")]
+    [Display(Name = "Location ID")]
+    [Range(0, double.MaxValue, ErrorMessage = "Invalid Value")]
+    public int LocationId { get; set; }
+
+    [Required(ErrorMessage = "*Reservation Date Required")]
+    [Display(Name = "Reservation Date")]
+    [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+    public System.DateTime AuditionDate { get; set; }
+}
+
+[MetadataType(typeof(UserDetailMetaData))]
+public partial class UserDetail
+{
+    [Display(Name = "Agent/Agency")]
+    public string AgentsFullName
+    {
+        get { return ($"{FirstName} {LastName}"); }
     }
 
-    public class UserDetailMetaData
-    {
-        [Required(ErrorMessage = "*Agency ID Required")]
-        [Display(Name = "Agency ID")]
-        [StringLength(128, ErrorMessage = "*128 character limit")]
-        public string UserID { get; set; }
+}
 
-        [Required(ErrorMessage = "*Agent's First Name Required")]
-        [Display(Name = "Agent's First Name")]
-        [StringLength(50, ErrorMessage = "*50 character limit")]
-        public string FirstName { get; set; }
+public class UserDetailMetaData
+{
+    [Required(ErrorMessage = "*Agency ID Required")]
+    [Display(Name = "Agency ID")]
+    [StringLength(128, ErrorMessage = "*128 character limit")]
+    public string UserID { get; set; }
 
-        [Required(ErrorMessage = "*Agent's Last Name Required")]
-        [Display(Name = "Agent's Last Name")]
-        [StringLength(50, ErrorMessage = "*50 character limit")]
-        public string LastName { get; set; }
+    [Required(ErrorMessage = "*Agent's First Name Required")]
+    [Display(Name = "Agent's First Name")]
+    [StringLength(50, ErrorMessage = "*50 character limit")]
+    public string FirstName { get; set; }
 
-        [Display(Name = "Agency Logo")]
-        [StringLength(50, ErrorMessage = "*50 character limit")]
-        [DisplayFormat(NullDisplayText = "*Not Available")]
-        public string UserPhoto { get; set; }
+    [Required(ErrorMessage = "*Agent's Last Name Required")]
+    [Display(Name = "Agent's Last Name")]
+    [StringLength(50, ErrorMessage = "*50 character limit")]
+    public string LastName { get; set; }
 
-        [Display(Name = "Agency Details")]
-        [StringLength(300, ErrorMessage = "*300 character limit")]
-        [DisplayFormat(NullDisplayText = "*Not Available")]
-        [UIHint("MultilineText")]
-        public string UserNotes { get; set; }
+    [Display(Name = "Agency Logo")]
+    [StringLength(50, ErrorMessage = "*50 character limit")]
+    [DisplayFormat(NullDisplayText = "*Not Available")]
+    public string UserPhoto { get; set; }
 
-        [Display(Name = "Agency Date Founded")]
-        [DisplayFormat(NullDisplayText = "*Not Available", DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> DateFounded { get; set; }
+    [Display(Name = "Agency Details")]
+    [StringLength(300, ErrorMessage = "*300 character limit")]
+    [DisplayFormat(NullDisplayText = "*Not Available")]
+    [UIHint("MultilineText")]
+    public string UserNotes { get; set; }
 
-        [Display(Name = "Agency Name")]
-        [StringLength(50, ErrorMessage = "*50 character limit")]
-        [DisplayFormat(NullDisplayText = "*Not Available")]
-        public string AgencyName { get; set; }
-    }
+    [Display(Name = "Agency Date Founded")]
+    [DisplayFormat(NullDisplayText = "*Not Available", DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+    public Nullable<System.DateTime> DateFounded { get; set; }
+
+    [Display(Name = "Agency Name")]
+    [StringLength(50, ErrorMessage = "*50 character limit")]
+    [DisplayFormat(NullDisplayText = "*Not Available")]
+    public string AgencyName { get; set; }
+}
 }

@@ -20,7 +20,7 @@ namespace Auditions.UI.MVC.Controllers
         private AuditionsEntities db = new AuditionsEntities();
 
         // GET: Actors
-        [Authorize(Roles = "Admin, Agency")]
+        [Authorize(Roles = "Admin, Agency, LocationManager")]
         public ActionResult Index()
         {
             if (User.IsInRole("Admin"))
@@ -36,7 +36,7 @@ namespace Auditions.UI.MVC.Controllers
             }
             else
             {
-                ViewBag.ErrorMessageActor = "You are not allowed to view the details of this Actor.";
+               //changetosession = "You are not allowed to view the details of this Actor.";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -79,6 +79,7 @@ namespace Auditions.UI.MVC.Controllers
 
 
         // GET: Actors/Create
+        [Authorize(Roles = "Admin, Agency")]
         public ActionResult Create()
         {
             string currentUserID = User.Identity.GetUserId();
@@ -89,6 +90,7 @@ namespace Auditions.UI.MVC.Controllers
         // POST: Actors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Agency")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ActorId,ActorFirstName,ActorLastName,Address,City,State,ZipCode,PhoneNumber,AgencyID,ActorPhoto,SpecialNotes,DateAdded,IsActive")] Actor actor, HttpPostedFileBase actorheadshot)
@@ -98,7 +100,7 @@ namespace Auditions.UI.MVC.Controllers
             if (ModelState.IsValid)
             {
                 #region Image Upload
-                string imgName = "nouserimg.png";
+                string imgName = "~/Content/actorheadshots/nouserimg.png";
 
                 if (actorheadshot != null)
                 {
@@ -178,6 +180,7 @@ namespace Auditions.UI.MVC.Controllers
         // POST: Actors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Agency")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ActorId,ActorFirstName,ActorLastName,Address,City,State,ZipCode,PhoneNumber,AgencyID,ActorPhoto,SpecialNotes,DateAdded,IsActive")] Actor actor, HttpPostedFileBase actorheadshot)
@@ -244,6 +247,7 @@ namespace Auditions.UI.MVC.Controllers
         }
 
         // GET: Actors/Delete/5
+        [Authorize(Roles = "Admin, Agency")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -259,6 +263,7 @@ namespace Auditions.UI.MVC.Controllers
         }
 
         // POST: Actors/Delete/5
+        [Authorize(Roles = "Admin, Agency")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

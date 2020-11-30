@@ -41,7 +41,6 @@ tr td img {
     display: inline-block;
     border: 1px solid rgba(250,250,250,0.5);
     padding-bottom: 2em;
-
 }
 
 .titlebarbg {
@@ -83,3 +82,17 @@ tr td img {
     -o-transform: translateX(-50%);
     transform: translateX(-50%);
 }
+
+    .content-section2 dt {
+        position: relative;
+        width: 100%;
+        display: inline-block;
+        height: auto;
+        left: 50%;
+        text-align: center;
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }

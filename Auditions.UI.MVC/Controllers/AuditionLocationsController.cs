@@ -17,7 +17,9 @@ namespace Auditions.UI.MVC.Controllers
     {
         private AuditionsEntities db = new AuditionsEntities();
 
+        
         // GET: AuditionLocations
+        [Authorize(Roles = "Admin, Agency, LocationManager")]
         public ActionResult Index()
         {
             var allLocations = db.AuditionLocations.Include(a => a.UserDetail);
@@ -39,6 +41,7 @@ namespace Auditions.UI.MVC.Controllers
         }
 
         // GET: AuditionLocations/Details/5
+        [Authorize(Roles = "Admin, Agency, LocationManager")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -54,6 +57,8 @@ namespace Auditions.UI.MVC.Controllers
         }
 
         // GET: AuditionLocations/Create
+        [Authorize(Roles = "Admin, LocationManager")]
+
         public ActionResult Create()
         {
             if (User.IsInRole("Admin"))
@@ -79,7 +84,7 @@ namespace Auditions.UI.MVC.Controllers
         // POST: AuditionLocations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin, Agency, LocationManager")]
+        [Authorize(Roles = "Admin, LocationManager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "LocationID,LocationName,Address,City,State,ZipCode,AuditionLimit,AuditionPhoto,AuditionDetails,AuditionDate,IsActive,LManagerID")] AuditionLocation auditionLocation, HttpPostedFileBase alphoto)
@@ -87,6 +92,10 @@ namespace Auditions.UI.MVC.Controllers
 
         {
             //ViewBag.LManagerID = new SelectList(db.UserDetails, "UserID", "FirstName", auditionLocation.LManagerID);
+
+            string currentUserID = User.Identity.GetUserId();
+            auditionLocation.LManagerID = currentUserID;
+
             if (ModelState.IsValid)
             {
                 #region Image Upload
@@ -135,7 +144,6 @@ namespace Auditions.UI.MVC.Controllers
                 auditionLocation.AuditionPhoto = imgName;
                 #endregion
 
-
                 db.AuditionLocations.Add(auditionLocation);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -145,6 +153,7 @@ namespace Auditions.UI.MVC.Controllers
         }
 
         // GET: AuditionLocations/Edit/5
+        [Authorize(Roles = "Admin, LocationManager")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -162,6 +171,7 @@ namespace Auditions.UI.MVC.Controllers
         // POST: AuditionLocations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, LocationManager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "LocationID,LocationName,Address,City,State,ZipCode,AuditionLimit,AuditionPhoto,AuditionDetails,AuditionDate,IsActive, LManagerID")] AuditionLocation auditionLocation, HttpPostedFileBase alphoto)
@@ -228,6 +238,7 @@ namespace Auditions.UI.MVC.Controllers
         }
 
         // GET: AuditionLocations/Delete/5
+        [Authorize(Roles = "Admin, LocationManager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -243,6 +254,7 @@ namespace Auditions.UI.MVC.Controllers
         }
 
         // POST: AuditionLocations/Delete/5
+        [Authorize(Roles = "Admin, LocationManager")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

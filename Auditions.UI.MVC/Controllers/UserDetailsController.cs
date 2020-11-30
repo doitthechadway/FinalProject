@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Auditions.DATA.EF;
 using Auditions.UI.MVC.Utilities;
+using Microsoft.AspNet.Identity;
 
 namespace Auditions.UI.MVC.Controllers
 {
@@ -19,7 +20,20 @@ namespace Auditions.UI.MVC.Controllers
         // GET: UserDetails
         public ActionResult Index()
         {
-            return View(db.UserDetails.ToList());
+            if (User.IsInRole("Admin"))
+            {
+                return View(db.UserDetails.ToList());
+            }
+            if (User.IsInRole("Agency, LocationManager"))
+            {
+                string currentUserID = User.Identity.GetUserId();
+                var singleUserDetails = db.UserDetails.Where(x => x.UserID == currentUserID);
+                return View(singleUserDetails.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // GET: UserDetails/Details/5
@@ -51,7 +65,7 @@ namespace Auditions.UI.MVC.Controllers
         public ActionResult Create([Bind(Include = "UserID,FirstName,LastName,AgencyName,UserPhoto,UserNotes,DateFounded")] UserDetail userDetail)
         {
             if (ModelState.IsValid)
-            {             
+            {
 
                 db.UserDetails.Add(userDetail);
                 db.SaveChanges();

@@ -93,7 +93,10 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.LocationID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div>
+@if (User.IsInRole("Admin") || User.IsInRole("LocationManager") && Request.IsAuthenticated)
+{
+    <p>@Html.ActionLink("Edit", "Edit", new { id = Model.LocationID })</p>
+}
+<p>@Html.ActionLink("Back to List", "Index")</p>
+</div>

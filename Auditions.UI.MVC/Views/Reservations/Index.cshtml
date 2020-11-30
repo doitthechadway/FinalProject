@@ -6,9 +6,13 @@
 
 <h2>Reservations</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+@if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 <table class="table table-bordered compact table-hover table-striped table-condensed" id="table_id" style="width:100%">
     <thead>
         <tr>
@@ -24,7 +28,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.AuditionLocation.LocationName)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuditionLocation.AuditionLimit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OpenSpots)
+            </th>
+            <th>
+                Options
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -44,9 +56,21 @@
                     @Html.DisplayFor(modelItem => item.AuditionLocation.LocationName)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.AuditionID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.AuditionID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.AuditionID })
+                    @Html.DisplayFor(model => item.AuditionLocation.AuditionLimit)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.OpenSpots)
+                </td>
+                <td>
+                    @if ((User.IsInRole("Admin") || User.IsInRole("Agency") || User.IsInRole("LocationManager")) && Request.IsAuthenticated)
+                    {
+                        <p>@Html.ActionLink("Details", "Details", new { id = item.AuditionID })</p>
+                    }
+                    @if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
+                    {
+                        <p>@Html.ActionLink("Edit", "Edit", new { id = item.AuditionID })</p>
+                        <p>@Html.ActionLink("Delete", "Delete", new { id = item.AuditionID })</p>
+                    }
                 </td>
             </tr>
         }

@@ -159,7 +159,7 @@ namespace Auditions.UI.MVC.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    string imgName = "nouserimg.png";
+                    string imgName = "~/Content/actorheadshots/nouserimg.png";
                     
                     if (agencyphoto != null)
                     {

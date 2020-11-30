@@ -19,17 +19,51 @@ namespace Auditions.UI.MVC.Controllers
         [Authorize(Roles = "Admin, Agency, LocationManager")]
         public ActionResult Index()
         {
+            //var auditionlimit = db.AuditionLocations.Where(x => x.LocationID == Reservation.LocationId).Select(x => x.AuditionLimit).FirstOrDefault();
+
+            //var nbrOfReservations = db.Reservations.Where(x => x.LocationId == reservation.LocationId).Count();
+
+            //var nbrOfOpenSpots = auditionlimit - nbrOfReservations;
+
+            var locations = db.AuditionLocations.ToList();
+
             if (User.IsInRole("Admin"))
             {
-                var reservations = db.Reservations.Include(r => r.Actor).Include(r => r.AuditionLocation).Include(d=>db.UserDetails);
-
                 var reservations2 = db.Reservations.Include(r => r.Actor);
+                foreach (var r in reservations2)
+                {
+                    var count = db.Reservations.Where(c => c.LocationId == r.LocationId).Count();
+                    r.OpenSpots = r.AuditionLocation.AuditionLimit - count;
+                }
                 return View(reservations2.ToList());
             }
-            else
+
+            else if (User.IsInRole("Agency"))
             {
-                return View("Index", "Home");
+
+                string currentUserID = User.Identity.GetUserId();
+                var agencyreservations = db.Reservations.Where(r => r.Actor.AgencyID == currentUserID);
+                foreach (var r in agencyreservations)
+                {
+                    var count = db.Reservations.Where(c => c.LocationId == r.LocationId).Count();
+                    r.OpenSpots = r.AuditionLocation.AuditionLimit - count;
+                }
+                return View(agencyreservations.ToList());
             }
+            else if (User.IsInRole("LocationManager"))
+            {
+                string currentUserID = User.Identity.GetUserId();
+                var agencyreservations = db.Reservations.Where(r => r.AuditionLocation.LManagerID == currentUserID);
+                foreach (var r in agencyreservations)
+                {
+                    var count = db.Reservations.Where(c => c.LocationId == r.LocationId).Count();
+                    r.OpenSpots = r.AuditionLocation.AuditionLimit - count;
+                }
+                return View(agencyreservations.ToList());
+
+            }
+            Session["ErrorMessage"] = "this is my error message";
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Reservations/Details/5
@@ -48,38 +82,57 @@ namespace Auditions.UI.MVC.Controllers
         }
 
         // GET: Reservations/Create
+        [Authorize(Roles = "Admin, Agency")]
         public ActionResult Create()
         {
             if (User.IsInRole("Admin"))
             {
-                ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorFirstName");
-                ViewBag.LocationId = new SelectList(db.AuditionLocations, "LocationID", "LocationName");
+                ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorFullName");
+                ViewBag.LocationId = new SelectList(db.AuditionLocations, "LocationID", "FullAuditionLocation");
                 return View();
             }
-            else
+            if (User.IsInRole("Agency"))
             {
                 string currentUserID = User.Identity.GetUserId();
-                ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorFirstName");
-                ViewBag.LocationId = new SelectList(db.AuditionLocations, "LocationID", "LocationName");
+                ViewBag.ActorId = new SelectList(db.Actors.Where(a => a.AgencyID == currentUserID), "ActorId", "ActorFullName");
+                ViewBag.LocationId = new SelectList(db.AuditionLocations, "LocationID", "FullAuditionLocation");
+
+                //ViewBag.AuditionDate = db.AuditionLocations.Where(a => a.AuditionDate == new System.DateTime);
+
+                //ViewBag.AuditionDate = new SelectList(db.AuditionLocations.Where(a => a.AuditionDate.Value.ToString()));
                 return View();
             }
+
+            return RedirectToAction("Index", "Home");
 
         }
 
         // POST: Reservations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Agency")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "AuditionID,ActorId,LocationId,AuditionDate")] Reservation reservation)
         {
-            ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorFirstName", reservation.ActorId);
-            ViewBag.LocationId = new SelectList(db.AuditionLocations, "LocationID", "LocationName", reservation.LocationId);
+            if (User.IsInRole("Agency"))
+            {
+                string currentUserID = User.Identity.GetUserId();
+                ViewBag.ActorId = new SelectList(db.Actors.Where(a => a.AgencyID == currentUserID), "ActorId", "ActorFullName", reservation.ActorId);
+                ViewBag.LocationId = new SelectList(db.AuditionLocations, "LocationID", "FullAuditionLocation", reservation.LocationId);
+            }
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorFullName", reservation.ActorId);
+                ViewBag.LocationId = new SelectList(db.AuditionLocations, "LocationID", "FullAuditionLocation", reservation.LocationId);
+            }
             if (ModelState.IsValid)
             {
                 var auditionlimit = db.AuditionLocations.Where(x => x.LocationID == reservation.LocationId).Select(x => x.AuditionLimit).FirstOrDefault();
 
                 var nbrOfReservations = db.Reservations.Where(x => x.LocationId == reservation.LocationId).Count();
+
+                var nbrOfOpenSpots = auditionlimit - nbrOfReservations;
 
                 if (nbrOfReservations < auditionlimit || User.IsInRole("Admin"))
                 {
@@ -92,6 +145,7 @@ namespace Auditions.UI.MVC.Controllers
                     ViewBag.Message = $"Sorry, there are no more auditions available at that location.";
                     return View("Create");
                 }
+                //assign reservation date
             }
 
             //ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorFirstName", reservation.ActorId);
@@ -100,6 +154,7 @@ namespace Auditions.UI.MVC.Controllers
         }
 
         // GET: Reservations/Edit/5
+        [Authorize(Roles = "Admin, Agency, LocationManager")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -111,14 +166,15 @@ namespace Auditions.UI.MVC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorFirstName", reservation.ActorId);
-            ViewBag.LocationId = new SelectList(db.AuditionLocations, "LocationID", "LocationName", reservation.LocationId);
+            ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorFullName", reservation.ActorId);
+            ViewBag.LocationId = new SelectList(db.AuditionLocations, "LocationID", "FullAuditionLocation", reservation.LocationId);
             return View(reservation);
         }
 
         // POST: Reservations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Agency, LocationManager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "AuditionID,ActorId,LocationId,AuditionDate")] Reservation reservation)
@@ -129,12 +185,13 @@ namespace Auditions.UI.MVC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorFirstName", reservation.ActorId);
-            ViewBag.LocationId = new SelectList(db.AuditionLocations, "LocationID", "LocationName", reservation.LocationId);
+            ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorFullName", reservation.ActorId);
+            ViewBag.LocationId = new SelectList(db.AuditionLocations, "LocationID", "FullAuditionLocation", reservation.LocationId);
             return View(reservation);
         }
 
         // GET: Reservations/Delete/5
+        [Authorize(Roles = "Admin, Agency, LocationManager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -150,6 +207,7 @@ namespace Auditions.UI.MVC.Controllers
         }
 
         // POST: Reservations/Delete/5
+        [Authorize(Roles = "Admin, Agency, LocationManager")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

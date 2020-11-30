@@ -192,6 +192,8 @@
     <Compile Include="Utilities\UploadUtility.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\agencylogo\nouserimg.png" />
+    <Content Include="Content\auditionlocations\nouserimg.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -377,8 +379,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\actorheadshots\resized\" />
-    <Folder Include="Content\agencylogo\" />
-    <Folder Include="Content\auditionlocations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

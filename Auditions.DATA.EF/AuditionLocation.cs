@@ -29,7 +29,7 @@ namespace Auditions.DATA.EF
         public byte AuditionLimit { get; set; }
         public string AuditionPhoto { get; set; }
         public string AuditionDetails { get; set; }
-        public Nullable<System.DateTime> AuditionDate { get; set; }
+        public System.DateTime AuditionDate { get; set; }
         public bool IsActive { get; set; }
         public string LManagerID { get; set; }
     
