@@ -60,7 +60,6 @@ namespace Auditions.UI.MVC.Controllers
             {
                 return HttpNotFound();
             }
-
             return View(actor);
         }
         //else if (User.IsInRole("Agency"))
