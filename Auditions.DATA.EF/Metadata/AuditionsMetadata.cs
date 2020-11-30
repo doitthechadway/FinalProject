@@ -16,6 +16,11 @@ namespace Auditions.DATA.EF
             get { return ($"{ActorFirstName} {ActorLastName}"); }
         }
 
+        [Display(Name = "Mailing Address")]
+        public string ActorContactInfo
+        {
+            get { return ($"{Address}\n{City}\n{State}, {ZipCode}"); }
+        }
     }
 
     public class ActorMetaData
@@ -73,9 +78,10 @@ namespace Auditions.DATA.EF
         public string SpecialNotes { get; set; }
 
         [DisplayFormat(NullDisplayText = "*Not Available", DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Date Hired by Agency")]
+        [Display(Name = "Date Hired")]
         public Nullable<System.DateTime> DateAdded { get; set; }
 
+        [Display(Name = "Active/Inactive")]
         [Required(ErrorMessage = "*Actor Status (Active/Inactive)")]
         public bool IsActive { get; set; }
     }
@@ -114,7 +120,6 @@ namespace Auditions.DATA.EF
         [Display(Name = "Audition Limit")]
         [Required(ErrorMessage = "*Audition Limit Required")]
         [Range(0, double.MaxValue, ErrorMessage = "Invalid Value")]
-
         public byte AuditionLimit { get; set; }
 
         [Display(Name = "Audition Photo")]
@@ -135,6 +140,10 @@ namespace Auditions.DATA.EF
         [Display(Name = "Audition Status (Active/Inactive)")]
         [Required(ErrorMessage = "*Show Active/Inactive Audition Required")]
         public bool IsActive { get; set; }
+
+        [Display(Name = "Location Manager ID")]
+        [Required(ErrorMessage = "*This field is required")]
+        public string LManagerID { get; set; }
     }
 
     [MetadataType(typeof(ReservationMetaData))]
@@ -168,7 +177,7 @@ namespace Auditions.DATA.EF
     [MetadataType(typeof(UserDetailMetaData))]
     public partial class UserDetail
     {
-        [Display(Name = "User's Full Name")]
+        [Display(Name = "Agent/Agency")]
         public string AgentsFullName
         {
             get { return ($"{FirstName} {LastName}"); }

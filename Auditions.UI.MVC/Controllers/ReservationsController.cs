@@ -16,12 +16,15 @@ namespace Auditions.UI.MVC.Controllers
         private AuditionsEntities db = new AuditionsEntities();
 
         // GET: Reservations
+        [Authorize(Roles = "Admin, Agency, LocationManager")]
         public ActionResult Index()
         {
             if (User.IsInRole("Admin"))
             {
-                var reservations = db.Reservations.Include(r => r.Actor).Include(r => r.AuditionLocation);
-                return View(reservations.ToList());
+                var reservations = db.Reservations.Include(r => r.Actor).Include(r => r.AuditionLocation).Include(d=>db.UserDetails);
+
+                var reservations2 = db.Reservations.Include(r => r.Actor);
+                return View(reservations2.ToList());
             }
             else
             {

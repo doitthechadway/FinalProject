@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Auditions.DATA.EF;
 using Auditions.UI.MVC.Utilities;
+using Microsoft.AspNet.Identity;
 
 namespace Auditions.UI.MVC.Controllers
 {
@@ -19,7 +20,22 @@ namespace Auditions.UI.MVC.Controllers
         // GET: AuditionLocations
         public ActionResult Index()
         {
-            return View(db.AuditionLocations.ToList());
+            var allLocations = db.AuditionLocations.Include(a => a.UserDetail);
+            if (User.IsInRole("Admin"))
+            {
+                return View(allLocations.ToList());
+            }
+            if (User.IsInRole("Agency"))
+            {
+                return View(allLocations.ToList());
+            }
+            else if (User.IsInRole("LocationManager"))
+            {
+                string currentUserID = User.Identity.GetUserId();
+                var lManagerLocations = db.AuditionLocations.Where(x => x.LManagerID == currentUserID).Include(a => a.UserDetail);
+                return View(lManagerLocations.ToList());
+            }
+            return View("Index", "Home");
         }
 
         // GET: AuditionLocations/Details/5
@@ -40,16 +56,37 @@ namespace Auditions.UI.MVC.Controllers
         // GET: AuditionLocations/Create
         public ActionResult Create()
         {
+            if (User.IsInRole("Admin"))
+            {
+                string currentUserID = User.Identity.GetUserId();
+                ViewBag.LManagerID = new SelectList(db.UserDetails.Where(x => x.UserID == currentUserID), "UserID", "AgentsFullName");
+                return View();
+            }
+            else if (User.IsInRole("LocationManager"))
+            {
+                string currentUserID = User.Identity.GetUserId();
+                ViewBag.LManagerID = new SelectList(db.UserDetails.Where(x => x.UserID == currentUserID), "UserID", "AgentsFullName");
+                return View();
+            }
+            else if (User.IsInRole("Agency"))
+            {
+                ViewBag.ErrorMessage = $"You are not allowed to create Audition Locations.";
+                return View("Index", "Home");
+            }
             return View();
         }
 
         // POST: AuditionLocations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Agency, LocationManager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LocationID,LocationName,Address,City,State,ZipCode,AuditionLimit,AuditionPhoto,AuditionDetails,AuditionDate,IsActive")] AuditionLocation auditionLocation, HttpPostedFileBase alphoto)
+        public ActionResult Create([Bind(Include = "LocationID,LocationName,Address,City,State,ZipCode,AuditionLimit,AuditionPhoto,AuditionDetails,AuditionDate,IsActive,LManagerID")] AuditionLocation auditionLocation, HttpPostedFileBase alphoto)
+
+
         {
+            //ViewBag.LManagerID = new SelectList(db.UserDetails, "UserID", "FirstName", auditionLocation.LManagerID);
             if (ModelState.IsValid)
             {
                 #region Image Upload
@@ -98,11 +135,12 @@ namespace Auditions.UI.MVC.Controllers
                 auditionLocation.AuditionPhoto = imgName;
                 #endregion
 
+
                 db.AuditionLocations.Add(auditionLocation);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.LManagerID = new SelectList(db.UserDetails, "UserID", "AgentsFullName", auditionLocation.LManagerID);
             return View(auditionLocation);
         }
 
@@ -126,7 +164,7 @@ namespace Auditions.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LocationID,LocationName,Address,City,State,ZipCode,AuditionLimit,AuditionPhoto,AuditionDetails,AuditionDate,IsActive")] AuditionLocation auditionLocation, HttpPostedFileBase alphoto)
+        public ActionResult Edit([Bind(Include = "LocationID,LocationName,Address,City,State,ZipCode,AuditionLimit,AuditionPhoto,AuditionDetails,AuditionDate,IsActive, LManagerID")] AuditionLocation auditionLocation, HttpPostedFileBase alphoto)
         {
             if (ModelState.IsValid)
             {

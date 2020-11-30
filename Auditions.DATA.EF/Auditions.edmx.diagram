@@ -19,6 +19,7 @@
         <AssociationConnector Association="AuditionsModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="AuditionsModel.FK_Reservation_AuditionLocation" ManuallyRouted="false" />
         <AssociationConnector Association="AuditionsModel.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="AuditionsModel.FK_AuditionLocation_UserDetails" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -31,8 +31,10 @@ namespace Auditions.DATA.EF
         public string AuditionDetails { get; set; }
         public Nullable<System.DateTime> AuditionDate { get; set; }
         public bool IsActive { get; set; }
+        public string LManagerID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reservation> Reservations { get; set; }
+        public virtual UserDetail UserDetail { get; set; }
     }
 }

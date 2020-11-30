@@ -18,6 +18,7 @@ namespace Auditions.DATA.EF
         public UserDetail()
         {
             this.Actors = new HashSet<Actor>();
+            this.AuditionLocations = new HashSet<AuditionLocation>();
         }
     
         public string UserID { get; set; }
@@ -30,5 +31,7 @@ namespace Auditions.DATA.EF
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Actor> Actors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AuditionLocation> AuditionLocations { get; set; }
     }
 }

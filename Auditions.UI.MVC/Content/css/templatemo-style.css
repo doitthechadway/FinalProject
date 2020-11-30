@@ -22,7 +22,7 @@ p {
 }
 
 .content-section {
-  padding-top: 80px;
+    padding-top: 80px;
   position: relative;
   width: 100%;
   display: inline-block;
@@ -230,7 +230,7 @@ header {
   padding: 0;
 }
 .sidebar-navigation li{
-  padding: 10px 0;
+  padding: 5px 0;
 }
 .sidebar-navigation span{
   display: inline-block;

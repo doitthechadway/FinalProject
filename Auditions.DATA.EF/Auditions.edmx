@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AuditionsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AuditionsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Actors">
           <Key>
             <PropertyRef Name="ActorId" />
@@ -89,6 +89,7 @@
           <Property Name="AuditionDetails" Type="varchar" MaxLength="300" />
           <Property Name="AuditionDate" Type="date" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LManagerID" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="Reservation">
           <Key>
@@ -120,6 +121,18 @@
             </Principal>
             <Dependent Role="Actors">
               <PropertyRef Name="AgencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuditionLocation_UserDetails">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+          <End Role="AuditionLocation" Type="Self.AuditionLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AuditionLocation">
+              <PropertyRef Name="LManagerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -217,6 +230,10 @@
             <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Actors" EntitySet="Actors" />
           </AssociationSet>
+          <AssociationSet Name="FK_AuditionLocation_UserDetails" Association="Self.FK_AuditionLocation_UserDetails">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="AuditionLocation" EntitySet="AuditionLocation" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -242,8 +259,7 @@
             <End Role="Reservation" EntitySet="Reservation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AuditionsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -332,6 +348,8 @@
           <Property Name="AuditionDate" Type="DateTime" Precision="0" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_AuditionLocation" FromRole="AuditionLocation" ToRole="Reservation" />
+          <Property Name="LManagerID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserDetail" Relationship="AuditionsModel.FK_AuditionLocation_UserDetails" FromRole="AuditionLocation" ToRole="UserDetail" />
         </EntityType>
         <EntityType Name="Reservation">
           <Key>
@@ -356,6 +374,7 @@
           <Property Name="UserNotes" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="DateFounded" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Actors" Relationship="Self.FK_Actors_UserDetails" FromRole="UserDetails" ToRole="Actors" />
+          <NavigationProperty Name="AuditionLocations" Relationship="AuditionsModel.FK_AuditionLocation_UserDetails" FromRole="UserDetail" ToRole="AuditionLocation" />
         </EntityType>
         <Association Name="FK_Actors_UserDetails">
           <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="1" />
@@ -458,7 +477,23 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <AssociationSet Name="FK_AuditionLocation_UserDetails" Association="AuditionsModel.FK_AuditionLocation_UserDetails">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="AuditionLocation" EntitySet="AuditionLocations" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_AuditionLocation_UserDetails">
+          <End Type="AuditionsModel.UserDetail" Role="UserDetail" Multiplicity="1" />
+          <End Type="AuditionsModel.AuditionLocation" Role="AuditionLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AuditionLocation">
+              <PropertyRef Name="LManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -532,6 +567,7 @@
           <EntitySetMapping Name="AuditionLocations">
             <EntityTypeMapping TypeName="AuditionsModel.AuditionLocation">
               <MappingFragment StoreEntitySet="AuditionLocation">
+                <ScalarProperty Name="LManagerID" ColumnName="LManagerID" />
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
                 <ScalarProperty Name="LocationName" ColumnName="LocationName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />

@@ -4,68 +4,81 @@
     ViewBag.Title = "Agency Management";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="col-md-12 pagetitle">
+    <h2>User Details</h2>
+    <h4>Index</h4>
+    <h3>
+        @Html.ActionLink("Create New", "Create")
+    </h3>
+</div>
+<hr />
+<hr />
+<hr />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table" id="table_id">
-    <thead>
+<div class="content-section2">
 
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AgencyName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserPhoto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserNotes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateFounded)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="table table-bordered compact table-hover table-striped table-condensed" id="table_id" style="width:100%">
+        <thead>
+
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AgencyName)
-                </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.UserPhoto)*@
-                    <img src="~/Content/agencylogo/@Html.DisplayFor(modelItem => item.UserPhoto)" alt="@item.UserPhoto" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserNotes)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateFounded)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.UserID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.UserID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AgencyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserPhoto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserNotes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateFounded)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AgencyName)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.UserPhoto)*@
+                        <img src="~/Content/agencylogo/@Html.DisplayFor(modelItem => item.UserPhoto)" alt="@item.UserPhoto" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserNotes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateFounded)
+                    </td>
+                    <td>
+                        <ul>
+                            <li>@Html.ActionLink("Edit", "Edit", new { id = item.UserID })</li>
+                            <li>
+                                @Html.ActionLink("Details", "Details", new { id = item.UserID })
+                            </li>
+                            <li>@Html.ActionLink("Delete", "Delete", new { id = item.UserID })</li>
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @if ((User.IsInRole("Admin") && Request.IsAuthenticated))
 {

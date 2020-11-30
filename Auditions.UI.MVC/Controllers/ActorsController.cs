@@ -94,6 +94,8 @@ namespace Auditions.UI.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ActorId,ActorFirstName,ActorLastName,Address,City,State,ZipCode,PhoneNumber,AgencyID,ActorPhoto,SpecialNotes,DateAdded,IsActive")] Actor actor, HttpPostedFileBase actorheadshot)
         {
+
+            ViewBag.AgencyID = new SelectList(db.UserDetails, "UserID", "FirstName", actor.AgencyID);
             if (ModelState.IsValid)
             {
                 #region Image Upload
@@ -146,8 +148,6 @@ namespace Auditions.UI.MVC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.AgencyID = new SelectList(db.UserDetails, "UserID", "FirstName", actor.AgencyID);
             return View(actor);
         }
 
@@ -164,22 +164,16 @@ namespace Auditions.UI.MVC.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.AgencyID = new SelectList(db.UserDetails, "UserID", "FirstName", actor.AgencyID);
+            return View(actor);
 
-            if (User.IsInRole("Admin"))
-            {
-                ViewBag.AgencyID = new SelectList(db.UserDetails, "UserID", "FirstName", actor.AgencyID);
-                return View(actor);
-            }
-            if (User.IsInRole("Agency"))
-            {
-                string currentUserID = User.Identity.GetUserId();
-                ViewBag.AgencyID = new SelectList(db.UserDetails.Where(x => x.UserID == currentUserID), "UserID", "FirstName", actor.AgencyID);
-                return View(actor);
-            }
-            else
-            {
-                return View("Index, Home");
-            }
+            //if (User.IsInRole("Agency"))
+            //{
+            //    string currentUserID = User.Identity.GetUserId();
+            //    ViewBag.AgencyID = new SelectList(db.UserDetails.Where(x => x.UserID == currentUserID), "UserID", "FirstName", actor.AgencyID);
+            //    return View(actor);
+            //}
+
         }
 
         // POST: Actors/Edit/5
@@ -271,13 +265,11 @@ namespace Auditions.UI.MVC.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Actor actor = db.Actors.Find(id);
-
             #region Image utility
             if (actor.ActorPhoto != null && actor.ActorPhoto != "nouserimg.png")
             {
                 UploadUtility.Delete(Server.MapPath("~/Content/actorheadshots/"), actor.ActorPhoto);
             }
-
             #endregion
 
             db.Actors.Remove(actor);
