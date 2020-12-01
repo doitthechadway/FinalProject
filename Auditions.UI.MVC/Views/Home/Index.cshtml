@@ -71,11 +71,13 @@
             </p>
         </div>
 
+        @*@foreach (var audition in Model)
+        {
         @for (int i = 0; i < 9; i++)
         {
             <div class="item">
                 <div class="image">
-                    <img src="~/Content/auditionlocations/" alt="">
+                    <img src="~/Content/auditionlocations/@audition." alt="">
                     <div class="featured-button button">
                         <a href="#projects">Continue Reading</a>
                     </div>
@@ -87,6 +89,7 @@
                 </div>
             </div>
         }
+        }*@
         <div class="section-content">
             <div class="owl-carousel owl-theme">
                 <div class="item">

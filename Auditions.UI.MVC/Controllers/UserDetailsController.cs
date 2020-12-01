@@ -48,6 +48,7 @@ namespace Auditions.UI.MVC.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.useremail = User.Identity.GetUserName();
             return View(userDetail);
         }
 
@@ -107,13 +108,13 @@ namespace Auditions.UI.MVC.Controllers
                     if (goodExts.Contains(ext.ToLower()) && (agencyphoto.ContentLength <= 4193404))
                     {
                         imgName = Guid.NewGuid() + ext.ToLower();
-                        string savePath = Server.MapPath("~/Content/agenylogo/");
+                        string savePath = Server.MapPath("~/Content/agencylogo/");
                         Image convertedImage = Image.FromStream(agencyphoto.InputStream);
                         int maxImageSize = 500;
                         int maxThumbSize = 100;
                         UploadUtility.ResizeImage(savePath, imgName, convertedImage, maxImageSize, maxThumbSize);
 
-                        UploadUtility.Delete(savePath, userDetail.UserPhoto);
+                        //UploadUtility.Delete(savePath, userDetail.UserPhoto);
 
                         userDetail.UserPhoto = imgName;
                     }
