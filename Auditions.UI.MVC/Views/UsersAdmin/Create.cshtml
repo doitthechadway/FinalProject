@@ -1,14 +1,17 @@
 ﻿@model Auditions.UI.MVC.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "User Administration";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="col-md-12 pagetitle">
+    <h2>@ViewBag.Title</h2>
+    <h4>Create</h4>
+</div>
+<div class="spacer"></div>
 
 @using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-error" })
     <div class="form-group">

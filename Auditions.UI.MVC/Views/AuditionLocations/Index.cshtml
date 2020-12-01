@@ -4,7 +4,11 @@
     ViewBag.Title = "Audition Locations";
 }
 
-<h2>Audition Locations</h2>
+<div class="col-md-12 pagetitle">
+    <h2>@ViewBag.Title</h2>
+    <h4>Index</h4>
+</div>
+<div class="spacer"></div>
 
 @if (User.IsInRole("Admin") || User.IsInRole("LocationManager") && Request.IsAuthenticated)
 {
@@ -71,13 +75,13 @@
                     {
                         <p>@Html.ActionLink("Details", "Details", new { id = item.LocationID })</p>
                     }
-                        @if (User.IsInRole("Admin") || User.IsInRole("LocationManager") && Request.IsAuthenticated)
-                        {
-                            <p>@Html.ActionLink("Edit", "Edit", new { id = item.LocationID })</p>
-                            <p>@Html.ActionLink("Delete", "Delete", new { id = item.LocationID })</p>
-                        }
+                    @if (User.IsInRole("Admin") || User.IsInRole("LocationManager") && Request.IsAuthenticated)
+                    {
+                        <p>@Html.ActionLink("Edit", "Edit", new { id = item.LocationID })</p>
+                        <p>@Html.ActionLink("Delete", "Delete", new { id = item.LocationID })</p>
+                    }
 
-                    </td>
+                </td>
             </tr>
         }
     </tbody>

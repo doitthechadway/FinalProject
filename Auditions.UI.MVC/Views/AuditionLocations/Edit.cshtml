@@ -1,10 +1,14 @@
 ﻿@model Auditions.DATA.EF.AuditionLocation
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Audition Locations";
 }
 
-<h2>Edit</h2>
+<div class="col-md-12 pagetitle">
+    <h2>@ViewBag.Title</h2>
+    <h4>Edit</h4>
+</div>
+<div class="spacer"></div>
 
 
 @using (Html.BeginForm("Edit", "AuditionLocations", FormMethod.Post, new { @enctype = "multipart/form-data" }))

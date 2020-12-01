@@ -1,14 +1,17 @@
 ﻿@model Auditions.DATA.EF.AuditionLocation
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Audition Locations";
 }
 
-<h2>Delete</h2>
+<div class="col-md-12 pagetitle">
+    <h2>@ViewBag.Title</h2>
+    <h4>Delete</h4>
+</div>
+<div class="spacer"></div>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>AuditionLocation</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -93,7 +96,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

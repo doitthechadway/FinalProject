@@ -1,13 +1,17 @@
 ﻿@model Auditions.DATA.EF.Reservation
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Reservations";
 }
 
-<h2>Details</h2>
+<div class="col-md-12 pagetitle">
+    <h2>@ViewBag.Title</h2>
+    <h4>Details</h4>
+</div>
+<div class="spacer"></div>
 
 <div>
-    <h4>Reservation</h4>
+    <h4>@Html.DisplayFor(model => model.Actor.ActorFirstName)'s Reservation at @Html.DisplayFor(model => model.AuditionLocation.LocationName)</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -19,21 +23,36 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Actor.ActorFirstName)
+            @Html.DisplayNameFor(model => model.Actor.ActorFullName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Actor.ActorFirstName)
+            @Html.DisplayFor(model => model.Actor.ActorFullName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AuditionLocation.LocationName)
+            @Html.DisplayFor(model => model.Actor.ActorFirstName)'s Photo
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AuditionLocation.LocationName)
+            <img src="~/Content/actorheadshots/@Html.DisplayFor(model => model.Actor.ActorPhoto)" alt="@Model.Actor.ActorPhoto" class="imgcontainer250" />
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.AuditionLocation.AuditionAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AuditionLocation.AuditionAddress)
+        </dd>
+
+        <dt>
+            Location Photo
+        </dt>
+
+        <dd>
+            <img src="~/Content/auditionlocations/@Html.DisplayFor(model => model.AuditionLocation.AuditionPhoto)" alt="@Model.AuditionLocation.AuditionPhoto" class="imgcontainer250" />
+        </dd>
     </dl>
 </div>
 <p>

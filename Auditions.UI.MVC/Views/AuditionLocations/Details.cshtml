@@ -1,13 +1,16 @@
 ﻿@model Auditions.DATA.EF.AuditionLocation
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Audition Locations";
 }
 
-<h2>Details</h2>
+<div class="col-md-12 pagetitle">
+    <h2>@ViewBag.Title</h2>
+    <h4>Details</h4>
+</div>
+<div class="spacer"></div>
 
 <div>
-    <h4>AuditionLocation</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -94,9 +97,9 @@
     </dl>
 </div>
 <div>
-@if (User.IsInRole("Admin") || User.IsInRole("LocationManager") && Request.IsAuthenticated)
-{
-    <p>@Html.ActionLink("Edit", "Edit", new { id = Model.LocationID })</p>
-}
-<p>@Html.ActionLink("Back to List", "Index")</p>
+    @if (User.IsInRole("Admin") || User.IsInRole("LocationManager") && Request.IsAuthenticated)
+    {
+        <p>@Html.ActionLink("Edit", "Edit", new { id = Model.LocationID })</p>
+    }
+    <p>@Html.ActionLink("Back to List", "Index")</p>
 </div>

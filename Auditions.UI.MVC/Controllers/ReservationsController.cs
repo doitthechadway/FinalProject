@@ -62,7 +62,7 @@ namespace Auditions.UI.MVC.Controllers
                 return View(agencyreservations.ToList());
 
             }
-            Session["ErrorMessage"] = "this is my error message";
+            
             return RedirectToAction("Index", "Home");
         }
 
@@ -120,6 +120,8 @@ namespace Auditions.UI.MVC.Controllers
                 string currentUserID = User.Identity.GetUserId();
                 ViewBag.ActorId = new SelectList(db.Actors.Where(a => a.AgencyID == currentUserID), "ActorId", "ActorFullName", reservation.ActorId);
                 ViewBag.LocationId = new SelectList(db.AuditionLocations, "LocationID", "FullAuditionLocation", reservation.LocationId);
+                var auditiondate = db.AuditionLocations.Where(x => x.LocationID == reservation.LocationId).Select(r => r.AuditionDate).FirstOrDefault();
+                reservation.AuditionDate = auditiondate;
             }
             if (User.IsInRole("Admin"))
             {
@@ -134,16 +136,26 @@ namespace Auditions.UI.MVC.Controllers
 
                 var nbrOfOpenSpots = auditionlimit - nbrOfReservations;
 
-                if (nbrOfReservations < auditionlimit || User.IsInRole("Admin"))
+                if (nbrOfReservations < auditionlimit && User.IsInRole("Agency"))
                 {
+                    var auditiondate = db.AuditionLocations.Where(x => x.LocationID == reservation.LocationId).Select(r => r.AuditionDate).FirstOrDefault();
+                    reservation.AuditionDate = auditiondate;
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 if (nbrOfReservations > auditionlimit && User.IsInRole("Agency"))
                 {
-                    ViewBag.Message = $"Sorry, there are no more auditions available at that location.";
+                    Session["ErrorMessage"] = "Cannot create reservation. There are no more open spaces at this location.";
                     return View("Create");
+                }
+                if (nbrOfReservations > auditionlimit && User.IsInRole("Admin"))
+                {
+                    var auditiondate = db.AuditionLocations.Where(x => x.LocationID == reservation.LocationId).Select(r => r.AuditionDate).FirstOrDefault();
+                    reservation.AuditionDate = auditiondate;
+                    db.Reservations.Add(reservation);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
                 //assign reservation date
             }

@@ -1,16 +1,19 @@
 ﻿@model Auditions.DATA.EF.Reservation
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Reservations";
 }
 
-<h2>Edit</h2>
-
+<div class="col-md-12 pagetitle">
+    <h2>@ViewBag.Title</h2>
+    <h4>Edit</h4>
+</div>
+<div class="spacer"></div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Reservation</h4>
         <hr />

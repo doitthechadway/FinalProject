@@ -6,7 +6,6 @@
         @Html.AntiForgeryToken()
 
         <ul>
-            <li>Account Menu:</li>
             @*Account Management/Audition Locations/Reservations*@
             @if ( (User.IsInRole("Admin") || User.IsInRole("Agency") || User.IsInRole("LocationManager")) && Request.IsAuthenticated)
             {

@@ -4,7 +4,11 @@
     ViewBag.Title = "Reservations";
 }
 
-<h2>Reservations</h2>
+<div class="col-md-12 pagetitle">
+    <h2>@ViewBag.Title</h2>
+    <h4>Index</h4>
+</div>
+<div class="spacer"></div>
 
 
 @if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
@@ -16,6 +20,9 @@
 <table class="table table-bordered compact table-hover table-striped table-condensed" id="table_id" style="width:100%">
     <thead>
         <tr>
+            <th>
+                Options
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.AuditionLocation.AuditionDate)
             </th>
@@ -34,15 +41,24 @@
             <th>
                 @Html.DisplayNameFor(model => model.OpenSpots)
             </th>
-            <th>
-                Options
-            </th>
+
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @if ((User.IsInRole("Admin") || User.IsInRole("Agency") || User.IsInRole("LocationManager")) && Request.IsAuthenticated)
+                    {
+                        <p>@Html.ActionLink("Details", "Details", new { id = item.AuditionID })</p>
+                    }
+                    @if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
+                    {
+                        <p>@Html.ActionLink("Edit", "Edit", new { id = item.AuditionID })</p>
+                        <p>@Html.ActionLink("Delete", "Delete", new { id = item.AuditionID })</p>
+                    }
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AuditionLocation.AuditionDate)
                 </td>
@@ -60,17 +76,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(model => item.OpenSpots)
-                </td>
-                <td>
-                    @if ((User.IsInRole("Admin") || User.IsInRole("Agency") || User.IsInRole("LocationManager")) && Request.IsAuthenticated)
-                    {
-                        <p>@Html.ActionLink("Details", "Details", new { id = item.AuditionID })</p>
-                    }
-                    @if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
-                    {
-                        <p>@Html.ActionLink("Edit", "Edit", new { id = item.AuditionID })</p>
-                        <p>@Html.ActionLink("Delete", "Delete", new { id = item.AuditionID })</p>
-                    }
                 </td>
             </tr>
         }
