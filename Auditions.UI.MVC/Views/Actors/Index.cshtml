@@ -7,15 +7,17 @@
 }
 <div class="col-md-12 pagetitle">
     <h2>@ViewBag.Title</h2>
-    <h4>Index</h4>
 </div>
 <div class="spacer"></div>
 
 <div class="topbar-padding">
     @if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
     {
-        <p>
-            @Html.ActionLink("Create New", "Create")
+        <p class=" col-md-6">
+            @Html.ActionLink("Create New", "Create", "Actors", null, new { @class = "btn btn-primary" })
+        </p>
+        <p class="col-md-6">
+            @Html.ActionLink("Tile View", "ActorTileView", "Actors", null, new { @class = "btn btn-primary" })
         </p>
     }
     <table class="table table-bordered compact table-hover table-striped table-condensed" id="table_id" style="width:100%">
@@ -100,14 +102,6 @@
         </tbody>
     </table>
 </div>
-
-
-@if ((User.IsInRole("Admin") && Request.IsAuthenticated))
-{
-    <div class="col-md-6">
-        @Html.ActionLink("Back to Admin Menu", "AdminMenu", "Admin")
-    </div>
-}
 
 
 

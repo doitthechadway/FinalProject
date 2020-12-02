@@ -6,15 +6,17 @@
 
 <div class="col-md-12 pagetitle">
     <h2>@ViewBag.Title</h2>
-    <h4>Index</h4>
 </div>
 <div class="spacer"></div>
 
 
 @if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
 {
-    <p>
-        @Html.ActionLink("Create New", "Create")
+    <p class=" col-md-6">
+        @Html.ActionLink("Create New", "Create", "Reservations", null, new { @class = "btn btn-primary" })
+    </p>
+    <p class="col-md-6">
+        @Html.ActionLink("Tile View", "ResTileView", "Reservations", null, new { @class = "btn btn-primary" })
     </p>
 }
 <table class="table table-bordered compact table-hover table-striped table-condensed" id="table_id" style="width:100%">
@@ -80,8 +82,21 @@
             </tr>
         }
     </tbody>
-
 </table>
+
+@if (Session["ErrorMessage"] != null)
+{
+    <div>
+        @Session["ErrorMessage"]
+    </div>
+}
+
+@if (ViewBag.Message != null)
+{
+    <div>
+        @ViewBag.Message
+    </div>
+}
 
 @if ((User.IsInRole("Admin") && Request.IsAuthenticated))
 {

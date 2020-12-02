@@ -58,7 +58,7 @@
                     <li>
                         <a href="@Url.Action("Index", "Home")#projects">Recent Projects</a>
                     </li>
-                    <li><a href="@Url.Action("ContactUs", "Contact")">Contact Us</a></li>
+                    <li><a href="@Url.Action("Contact", "Contact")">Contact Us</a></li>
                     <li>@Html.Partial("_LoginPartial")</li>
                     @*@if ((User.IsInRole("Admin") && Request.IsAuthenticated))
                         {
@@ -77,7 +77,7 @@
 
     <div class="sidebar-navigation hidden-sm hidden-xs">
         <div class="logo">
-            <a href="#">Sen<em>tra</em></a>
+            <a href="#">Audition<em>Solutions</em></a>
         </div>
         <nav>
             <ul>
@@ -103,7 +103,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="@Url.Action("Index", "Home")#contact">
+                    <a href="@Url.Action("Contact", "Contact")#contact">
                         <span class="rect"></span>
                         <span class="circle"></span>
                         Contact Us

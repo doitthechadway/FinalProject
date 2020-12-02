@@ -40,8 +40,29 @@ namespace Auditions.UI.MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            //var actors = db.Actors.Include(a => a.UserDetail);
+            //return View(actors.ToList());
+        }
 
-
+        [Authorize(Roles = "Admin, Agency, LocationManager")]
+        public ActionResult ActorTileView()
+        {
+            if (User.IsInRole("Admin"))
+            {
+                var actors = db.Actors.Include(a => a.UserDetail);
+                return View(actors.ToList());
+            }
+            else if (User.IsInRole("Agency"))
+            {
+                string currentUserID = User.Identity.GetUserId();
+                var agencysActors = db.Actors.Where(x => x.AgencyID == currentUserID).Include(a => a.UserDetail);
+                return View(agencysActors.ToList());
+            }
+            else
+            {
+                //changetosession = "You are not allowed to view the details of this Actor.";
+                return RedirectToAction("Index", "Home");
+            }
 
             //var actors = db.Actors.Include(a => a.UserDetail);
             //return View(actors.ToList());

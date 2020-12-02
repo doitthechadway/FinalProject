@@ -193,6 +193,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\agencylogo\nouserimg.png" />
+    <Content Include="Content\img\featured_1.png" />
+    <Content Include="Content\img\featured_2.png" />
+    <Content Include="Content\img\featured_3.png" />
+    <Content Include="Content\img\featured_4.png" />
+    <Content Include="Content\img\featured_5.png" />
+    <Content Include="Content\img\featured_6.png" />
+    <Content Include="Content\img\featured_7.png" />
+    <Content Include="Content\img\featured_8.png" />
+    <Content Include="Content\img\featured_9.png" />
     <Content Include="Content\auditionlocations\nouserimg.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -251,9 +260,6 @@
     <Content Include="Content\img\blog_2.jpg" />
     <Content Include="Content\img\blog_3.jpg" />
     <Content Include="Content\img\close.png" />
-    <Content Include="Content\img\featured_1.jpg" />
-    <Content Include="Content\img\featured_2.jpg" />
-    <Content Include="Content\img\featured_3.jpg" />
     <Content Include="Content\img\loading.gif" />
     <Content Include="Content\img\next.png" />
     <Content Include="Content\img\portfolio_1.jpg" />
@@ -374,7 +380,8 @@
     <Content Include="Views\Contact\Contact.cshtml" />
     <Content Include="Views\Contact\Contact - Copy.cshtml" />
     <Content Include="Views\Contact\EmailConfirmation.cshtml" />
-    <Content Include="Views\Actors\Index - Copy.cshtml" />
+    <Content Include="Views\Reservations\ResTileView.cshtml" />
+    <Content Include="Views\Actors\ActorTileView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

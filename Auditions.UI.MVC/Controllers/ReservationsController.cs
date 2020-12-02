@@ -66,6 +66,56 @@ namespace Auditions.UI.MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "Admin, Agency, LocationManager")]
+        public ActionResult ResTileView()
+        {
+            //var auditionlimit = db.AuditionLocations.Where(x => x.LocationID == Reservation.LocationId).Select(x => x.AuditionLimit).FirstOrDefault();
+
+            //var nbrOfReservations = db.Reservations.Where(x => x.LocationId == reservation.LocationId).Count();
+
+            //var nbrOfOpenSpots = auditionlimit - nbrOfReservations;
+
+            var locations = db.AuditionLocations.ToList();
+
+            if (User.IsInRole("Admin"))
+            {
+                var reservations2 = db.Reservations.Include(r => r.Actor);
+                foreach (var r in reservations2)
+                {
+                    var count = db.Reservations.Where(c => c.LocationId == r.LocationId).Count();
+                    r.OpenSpots = r.AuditionLocation.AuditionLimit - count;
+                }
+                return View(reservations2.ToList());
+            }
+
+            else if (User.IsInRole("Agency"))
+            {
+
+                string currentUserID = User.Identity.GetUserId();
+                var agencyreservations = db.Reservations.Where(r => r.Actor.AgencyID == currentUserID);
+                foreach (var r in agencyreservations)
+                {
+                    var count = db.Reservations.Where(c => c.LocationId == r.LocationId).Count();
+                    r.OpenSpots = r.AuditionLocation.AuditionLimit - count;
+                }
+                return View(agencyreservations.ToList());
+            }
+            else if (User.IsInRole("LocationManager"))
+            {
+                string currentUserID = User.Identity.GetUserId();
+                var agencyreservations = db.Reservations.Where(r => r.AuditionLocation.LManagerID == currentUserID);
+                foreach (var r in agencyreservations)
+                {
+                    var count = db.Reservations.Where(c => c.LocationId == r.LocationId).Count();
+                    r.OpenSpots = r.AuditionLocation.AuditionLimit - count;
+                }
+                return View(agencyreservations.ToList());
+
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
         // GET: Reservations/Details/5
         public ActionResult Details(int? id)
         {
@@ -85,6 +135,7 @@ namespace Auditions.UI.MVC.Controllers
         [Authorize(Roles = "Admin, Agency")]
         public ActionResult Create()
         {
+            
             if (User.IsInRole("Admin"))
             {
                 ViewBag.ActorId = new SelectList(db.Actors, "ActorId", "ActorFullName");
@@ -140,6 +191,7 @@ namespace Auditions.UI.MVC.Controllers
                 {
                     var auditiondate = db.AuditionLocations.Where(x => x.LocationID == reservation.LocationId).Select(r => r.AuditionDate).FirstOrDefault();
                     reservation.AuditionDate = auditiondate;
+                    Session["ErrorMessage"] = null;
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -147,12 +199,14 @@ namespace Auditions.UI.MVC.Controllers
                 if (nbrOfReservations > auditionlimit && User.IsInRole("Agency"))
                 {
                     Session["ErrorMessage"] = "Cannot create reservation. There are no more open spaces at this location.";
+                    ViewBag.Message = "Cannot create reservation. There are no more open spaces at this location.";
                     return View("Create");
                 }
-                if (nbrOfReservations > auditionlimit && User.IsInRole("Admin"))
+                if (nbrOfReservations > auditionlimit || User.IsInRole("Admin"))
                 {
                     var auditiondate = db.AuditionLocations.Where(x => x.LocationID == reservation.LocationId).Select(r => r.AuditionDate).FirstOrDefault();
                     reservation.AuditionDate = auditiondate;
+                    Session["ErrorMessage"] = null;
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
                     return RedirectToAction("Index");

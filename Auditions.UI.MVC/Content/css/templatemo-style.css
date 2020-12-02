@@ -19,6 +19,7 @@ p {
 .page-content {
   width: 77.5%;
   float: right;
+  padding-bottom: 100px;
 }
 
 .content-section {

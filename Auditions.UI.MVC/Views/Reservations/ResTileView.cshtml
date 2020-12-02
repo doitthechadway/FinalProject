@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Auditions.DATA.EF.Reservation>
+
+@{
+    ViewBag.Title = "Reservations";
+}
+
+<div class="col-md-12 pagetitle">
+    <h2>@ViewBag.Title</h2>
+    <h4>Index</h4>
+</div>
+<div class="spacer"></div>
+
+@if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
+{
+    <p class=" col-md-6">
+        @Html.ActionLink("Create New", "Create", "Reservations", null, new { @class = "btn btn-primary" })
+    </p>
+    <p class="col-md-6">
+        @Html.ActionLink("Table View", "Index", "Reservations", null, new { @class = "btn btn-primary" })
+    </p>
+}
+
+@foreach (var item in Model)
+{
+    <div class="gContainer">
+        <div class="reservationdate">@Html.DisplayFor(modelItem => item.AuditionLocation.AuditionDate)</div>
+        <div class="gContent">
+            <div class="gtileactor">
+                <img src="~/Content/actorheadshots/@Html.DisplayFor(modelItem => item.Actor.ActorPhoto)" alt="@item.Actor.ActorPhoto" class="imgtile" />
+            </div>
+            <div class="gtilelocation">
+                <img src="~/Content/auditionlocations/@Html.DisplayFor(modelItem => item.AuditionLocation.AuditionPhoto)" alt="@item.AuditionLocation.AuditionPhoto" class="imgtile" />
+            </div>
+        </div>
+
+        <table class="cardtable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Actor.ActorFullName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.AuditionLocation.LocationName)</td>   
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <div class="gFooterLeft">
+                @if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.AuditionID })
+                }
+            </div>
+            <div style="text-align:center">
+                @if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.AuditionID })
+                }
+            </div>
+            <div class="gFooterRight">
+                @if ((User.IsInRole("Admin") || User.IsInRole("Agency") || User.IsInRole("LocationManager")) && Request.IsAuthenticated)
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.AuditionID })
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@if ((User.IsInRole("Admin") && Request.IsAuthenticated))
+{
+    <div class="col-md-6">
+        @Html.ActionLink("Back to Admin Menu", "AdminMenu", "Admin")
+    </div>
+}

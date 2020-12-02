@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Auditions.DATA.EF.Actor>
+
+@{
+
+    ViewBag.Title = "Actors";
+
+}
+<div class="col-md-12 pagetitle">
+    <h2>@ViewBag.Title</h2>
+</div>
+<div class="spacer"></div>
+
+
+
+@if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
+{
+    <p class=" col-md-6">
+        @Html.ActionLink("Create New", "Create", "Actors", null, new { @class = "btn btn-primary" })
+    </p>
+    <p class="col-md-6">
+        @Html.ActionLink("Table View", "Index", "Actors", null, new { @class = "btn btn-primary" })
+    </p>
+}
+
+
+@foreach (var item in Model)
+{
+    <div class="gContainer">
+        <div class="reservationdate">@Html.DisplayFor(modelItem => item.DateAdded)</div>
+        <div class="gContent">
+            <div class="gtileactor">
+                <img src="~/Content/actorheadshots/@Html.DisplayFor(modelItem => item.ActorPhoto)" alt="@item.ActorPhoto" class="imgtile" />
+            </div>
+            <div class="infocontainer">
+                <table class="actorinfo">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ActorFullName)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="actorinfo">
+                    <thead>
+                        <tr>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ActorContactInfo)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div>
+            <div class="gFooterLeft">
+                @if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ActorId })
+                }
+            </div>
+            <div style="text-align:center">
+                @if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ActorId })
+                }
+            </div>
+            <div class="gFooterRight">
+                @if ((User.IsInRole("Admin") || User.IsInRole("Agency")) && Request.IsAuthenticated)
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.ActorId })
+                }
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
